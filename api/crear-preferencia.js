@@ -9,6 +9,8 @@ const handler = async (req, res) => {
     return res.status(400).json({ error: 'Faltan datos requeridos' })
   }
 
+  const APP_URL = process.env.APP_URL || 'https://voce-femminile-eh4r.vercel.app'
+
   try {
     const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
@@ -31,6 +33,13 @@ const handler = async (req, res) => {
           name: nombre,
           email: email,
         },
+        back_urls: {
+          success: APP_URL + '/pago-exitoso?boleto_id=' + boleto_id,
+          failure: APP_URL + '/pago-fallido?boleto_id=' + boleto_id,
+          pending: APP_URL + '/pago-pendiente?boleto_id=' + boleto_id,
+        },
+        auto_return: 'approved',
+        notification_url: APP_URL + '/api/webhook-mp',
         external_reference: boleto_id,
       }),
     })
