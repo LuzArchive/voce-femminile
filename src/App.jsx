@@ -3,6 +3,7 @@ import './App.css'
 import Home from './pages/Home'
 import PagoExitoso from './pages/PagoExitoso'
 import PagoFallido from './pages/PagoFallido'
+import AdminScanner from './pages/AdminScanner'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/pago-exitoso" element={<PagoExitoso />} />
         <Route path="/pago-fallido" element={<PagoFallido />} />
         <Route path="/pago-pendiente" element={<PagoExitoso />} />
+        <Route path="/admin/scanner" element={<AdminScanner />} />
       </Routes>
     </BrowserRouter>
   )

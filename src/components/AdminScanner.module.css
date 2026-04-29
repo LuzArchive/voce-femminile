@@ -1,0 +1,290 @@
+.page {
+  min-height: 100vh;
+  background: #050e0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.loginCard, .scannerCard {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  text-align: center;
+}
+
+.logoSmall {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: var(--emerald);
+  margin-bottom: 1.5rem;
+}
+
+.loginTitle, .scanTitle {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+
+.loginSubtitle {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2rem;
+}
+
+.cardHeader {
+  margin-bottom: 2rem;
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  outline: none;
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.input::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+.input:focus {
+  border-color: var(--emerald);
+}
+
+.errorMsg {
+  font-size: 0.82rem;
+  color: #f87171;
+  margin-bottom: 1rem;
+  margin-top: -0.5rem;
+}
+
+.btnPrimary {
+  width: 100%;
+  background: var(--emerald);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(16,185,129,0.25);
+  border: none;
+}
+
+.btnPrimary:hover {
+  background: var(--emerald-dark);
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  width: 100%;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-top: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.8);
+}
+
+/* Estado idle */
+.idleState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.qrIcon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--emerald);
+}
+
+.idleText {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Scanner */
+.scannerArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qrReader {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(16,185,129,0.4);
+}
+
+.scanHint {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+}
+
+/* Procesando */
+.processingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(16,185,129,0.2);
+  border-top-color: var(--emerald);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Resultados */
+.resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.resultIconValido {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.15);
+  border: 2px solid rgba(16,185,129,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--emerald);
+}
+
+.resultIconUsado {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(245,158,11,0.1);
+  border: 2px solid rgba(245,158,11,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f59e0b;
+}
+
+.resultIconInvalido {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.1);
+  border: 2px solid rgba(239,68,68,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+}
+
+.resultTitle {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.boletoInfo {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+}
+
+.infoLabel {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.infoValue {
+  color: #ffffff;
+  font-weight: 500;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.resultNote {
+  font-size: 0.82rem;
+  color: var(--emerald);
+}
+
+.resultNoteWarning {
+  font-size: 0.82rem;
+  color: #f59e0b;
+}
+
+.resultNoteError {
+  font-size: 0.82rem;
+  color: #f87171;
+}
