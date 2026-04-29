@@ -4,6 +4,7 @@ import styles from './MembersCarousel.module.css'
 // Importa las fotos que tengas - las que no existan usan la inicial
 import ferImg from '../../images/fer.png'
 import madaImg from '../../images/mada.png'
+import daniImg from '../../images/dani.png'
 
 const members = [
   { name: 'Fer',    voice: 'Soprano', initial: 'F', photo: ferImg },
@@ -11,7 +12,7 @@ const members = [
   { name: 'Lupita', voice: 'Soprano', initial: 'L', photo: null },
   { name: 'Abi',    voice: 'Mezzo',   initial: 'A', photo: null },
   { name: 'Mada',   voice: 'Mezzo',   initial: 'M', photo: madaImg },
-  { name: 'Dany',   voice: 'Mezzo',   initial: 'D', photo: null },
+  { name: 'Dany',   voice: 'Mezzo',   initial: 'D', photo: daniImg },
   { name: 'Andy',   voice: 'Mezzo',   initial: 'A', photo: null },
   { name: 'Ada',    voice: 'Alto',    initial: 'A', photo: null },
   { name: 'Luz',    voice: 'Alto',    initial: 'L', photo: null },

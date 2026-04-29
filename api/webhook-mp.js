@@ -1,7 +1,7 @@
 const { createClient } = require('@supabase/supabase-js')
-const { v4: uuidv4 } = require('uuid')
 const QRCode = require('qrcode')
 const { Resend } = require('resend')
+const crypto = require('crypto')
 
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
@@ -18,7 +18,6 @@ const handler = async (req, res) => {
   if (type !== 'payment') return res.status(200).json({ message: 'Ignorado' })
 
   try {
-    // Consultar el pago a Mercado Pago
     const pagoRes = await fetch('https://api.mercadopago.com/v1/payments/' + data.id, {
       headers: { 'Authorization': 'Bearer ' + process.env.MP_ACCESS_TOKEN },
     })
@@ -28,15 +27,14 @@ const handler = async (req, res) => {
 
     const boleto_id = pago.external_reference
 
-    // Buscar el boleto en Supabase
     const { data: boleto, error: errorBoleto } = await supabase
       .from('boletos').select('*').eq('id', boleto_id).single()
 
     if (errorBoleto || !boleto) return res.status(404).json({ error: 'Boleto no encontrado' })
     if (boleto.estado === 'pagado') return res.status(200).json({ message: 'Ya procesado' })
 
-    // Generar codigo unico para el QR
-    const codigo_qr = uuidv4()
+    // Generar UUID sin depender del paquete uuid
+    const codigo_qr = crypto.randomUUID()
 
     // Generar imagen QR en base64
     const qrDataUrl = await QRCode.toDataURL(codigo_qr, {
@@ -44,6 +42,7 @@ const handler = async (req, res) => {
       margin: 2,
       color: { dark: '#0a0a0a', light: '#ffffff' }
     })
+    const qrBase64 = qrDataUrl.split(',')[1]
 
     // Guardar en Supabase
     await supabase.from('boletos').update({
@@ -52,17 +51,14 @@ const handler = async (req, res) => {
       payment_id: String(pago.id),
     }).eq('id', boleto_id)
 
-    // Extraer base64 puro (sin el prefijo data:image/png;base64,)
-    const qrBase64 = qrDataUrl.split(',')[1]
-
-    // Construir lista de boletos para el correo
+    // Lista de boletos para el correo
     const listaBoletos = Array.from({ length: boleto.cantidad }, (_, i) =>
       '<li style="margin-bottom:4px;">Boleto #' + (i + 1) + ' — Verdades de Media Noche</li>'
     ).join('')
 
-    // Enviar correo con el QR
+    // Enviar correo
     await resend.emails.send({
-      from: 'Voce Femminile <vanteth00@gmail.com>',
+      from: 'Voce Femminile <' + process.env.RESEND_FROM_EMAIL + '>',
       to: boleto.email,
       subject: 'Tu boleto para Verdades de Media Noche',
       html: `
@@ -72,7 +68,6 @@ const handler = async (req, res) => {
               VOCE FEMMINILE
             </h1>
           </div>
-
           <div style="background:#f9f9f7;border:1px solid #e5e7eb;border-radius:16px;padding:2rem;margin-bottom:1.5rem;">
             <p style="margin:0 0 0.5rem;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:#6b7280;">
               Espectaculo Coral
@@ -80,32 +75,31 @@ const handler = async (req, res) => {
             <h2 style="font-size:2rem;margin:0 0 1.5rem;color:#0a0a0a;">
               Verdades de Media Noche
             </h2>
-
             <div style="display:flex;gap:1rem;margin-bottom:1.5rem;">
               <div style="flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;">
-                <p style="margin:0 0 0.25rem;font-size:0.7rem;text-transform:uppercase;color:#6b7280;letter-spacing:0.1em;">Fecha</p>
+                <p style="margin:0 0 0.25rem;font-size:0.7rem;text-transform:uppercase;color:#6b7280;">Fecha</p>
                 <p style="margin:0;font-weight:600;color:#0a0a0a;">9 de Marzo, 2026</p>
                 <p style="margin:0;font-size:0.9rem;color:#6b7280;">5:00 PM</p>
               </div>
               <div style="flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;">
-                <p style="margin:0 0 0.25rem;font-size:0.7rem;text-transform:uppercase;color:#6b7280;letter-spacing:0.1em;">Lugar</p>
+                <p style="margin:0 0 0.25rem;font-size:0.7rem;text-transform:uppercase;color:#6b7280;">Lugar</p>
                 <p style="margin:0;font-weight:600;color:#0a0a0a;">Teatro Principal</p>
                 <p style="margin:0;font-size:0.9rem;color:#6b7280;">Junto a San Luis Obispo</p>
               </div>
             </div>
-
-            <p style="margin:0 0 0.5rem;font-size:0.85rem;color:#6b7280;">Hola <strong style="color:#0a0a0a;">${boleto.nombre}</strong>, tus boletos:</p>
+            <p style="margin:0 0 0.5rem;font-size:0.85rem;color:#6b7280;">
+              Hola <strong style="color:#0a0a0a;">${boleto.nombre}</strong>, tus boletos:
+            </p>
             <ul style="margin:0 0 1.5rem;padding-left:1.2rem;color:#1f2937;font-size:0.9rem;">
               ${listaBoletos}
             </ul>
-
             <div style="text-align:center;">
               <p style="margin:0 0 0.75rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:#6b7280;">
                 Presenta este codigo en la entrada
               </p>
               <img
                 src="cid:qr-boleto"
-                alt="Codigo QR de tu boleto"
+                alt="Codigo QR"
                 style="width:200px;height:200px;border:4px solid #10b981;border-radius:12px;"
               />
               <p style="margin:0.75rem 0 0;font-size:0.7rem;color:#9ca3af;word-break:break-all;">
@@ -113,9 +107,8 @@ const handler = async (req, res) => {
               </p>
             </div>
           </div>
-
           <p style="text-align:center;font-size:0.8rem;color:#9ca3af;">
-            Si tienes dudas escribenos a <a href="https://wa.me/522472803489" style="color:#10b981;">+52 247-280-3489</a>
+            Dudas: <a href="https://wa.me/522472803489" style="color:#10b981;">+52 247-280-3489</a>
           </p>
         </div>
       `,
