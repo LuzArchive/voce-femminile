@@ -8,7 +8,7 @@ export default function Footer() {
           <span className={styles.label}>Síguenos</span>
           <div className={styles.socials}>
             <a
-              href="https://instagram.com/voc.efemminile"
+              href="https://instagram.com/voce.femminile"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialBtn}
