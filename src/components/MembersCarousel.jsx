@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import styles from './MembersCarousel.module.css'
 
+// Importa las fotos que tengas - las que no existan usan la inicial
+import ferImg from '../../images/fer.png'
+import madaImg from '../../images/mada.png'
+
 const members = [
-  { name: 'Fer',    voice: 'Soprano', initial: 'F' },
-  { name: 'Faty',   voice: 'Soprano', initial: 'F' },
-  { name: 'Lupita', voice: 'Soprano', initial: 'L' },
-  { name: 'Abi',    voice: 'Mezzo',   initial: 'A' },
-  { name: 'Mada',   voice: 'Mezzo',   initial: 'M' },
-  { name: 'Dany',   voice: 'Mezzo',   initial: 'D' },
-  { name: 'Andy',   voice: 'Mezzo',   initial: 'A' },
-  { name: 'Ada',    voice: 'Alto',    initial: 'A' },
-  { name: 'Luz',    voice: 'Alto',    initial: 'L' },
-  { name: 'Vicky',  voice: 'Alto',    initial: 'V' },
+  { name: 'Fer',    voice: 'Soprano', initial: 'F', photo: ferImg },
+  { name: 'Faty',   voice: 'Soprano', initial: 'F', photo: null },
+  { name: 'Lupita', voice: 'Soprano', initial: 'L', photo: null },
+  { name: 'Abi',    voice: 'Mezzo',   initial: 'A', photo: null },
+  { name: 'Mada',   voice: 'Mezzo',   initial: 'M', photo: madaImg },
+  { name: 'Dany',   voice: 'Mezzo',   initial: 'D', photo: null },
+  { name: 'Andy',   voice: 'Mezzo',   initial: 'A', photo: null },
+  { name: 'Ada',    voice: 'Alto',    initial: 'A', photo: null },
+  { name: 'Luz',    voice: 'Alto',    initial: 'L', photo: null },
+  { name: 'Vicky',  voice: 'Alto',    initial: 'V', photo: null },
 ]
 
 const voiceColors = {
@@ -91,9 +95,19 @@ export default function MembersCarousel() {
                 onClick={() => !isActive && setActive(i)}
               >
                 <div className={styles.cardInner}>
-                  <div className={styles.avatar} style={{ '--av-border': color.border, '--av-text': color.text }}>
-                    {member.initial}
-                  </div>
+                  {member.photo ? (
+                    <div className={styles.photoWrapper} style={{ '--av-border': color.border }}>
+                      <img
+                        src={member.photo}
+                        alt={member.name}
+                        className={styles.photo}
+                      />
+                    </div>
+                  ) : (
+                    <div className={styles.avatar} style={{ '--av-border': color.border, '--av-text': color.text }}>
+                      {member.initial}
+                    </div>
+                  )}
                   <div className={styles.memberInfo}>
                     <span className={styles.voiceBadge} style={{ '--badge-bg': color.bg, '--badge-text': color.text, '--badge-border': color.border }}>
                       {member.voice}
