@@ -8,17 +8,22 @@ import daniImg from '../../images/dani.png'
 import andyImg from '../../images/andy.png'
 import abiImg from '../../images/abi.png'
 import lupitaImg from '../../images/lupita.png'
+import fatyImg from '../../images/faty.png'
+import vickyImg from '../../images/vicky.png'
+import luzImg from '../../images/luz.png'
+
+
 const members = [
   { name: 'Fer',    voice: 'Soprano', initial: 'F', photo: ferImg },
-  { name: 'Faty',   voice: 'Soprano', initial: 'F', photo: null },
+  { name: 'Faty',   voice: 'Soprano', initial: 'F', photo: fatyImg },
   { name: 'Lupita', voice: 'Soprano', initial: 'L', photo: lupitaImg },
   { name: 'Abi',    voice: 'Mezzo',   initial: 'A', photo: abiImg },
   { name: 'Mada',   voice: 'Mezzo',   initial: 'M', photo: madaImg },
   { name: 'Dany',   voice: 'Mezzo',   initial: 'D', photo: daniImg },
   { name: 'Andy',   voice: 'Mezzo',   initial: 'A', photo: andyImg },
   { name: 'Ada',    voice: 'Alto',    initial: 'A', photo: null },
-  { name: 'Luz',    voice: 'Alto',    initial: 'L', photo: null },
-  { name: 'Vicky',  voice: 'Alto',    initial: 'V', photo: null },
+  { name: 'Luz',    voice: 'Alto',    initial: 'L', photo: luzImg },
+  { name: 'Vicky',  voice: 'Alto',    initial: 'V', photo: vickyImg },
 ]
 
 const voiceColors = {
