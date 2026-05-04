@@ -11,7 +11,7 @@ import lupitaImg from '../../images/lupita.png'
 import fatyImg from '../../images/faty.png'
 import vickyImg from '../../images/vicky.png'
 import luzImg from '../../images/luz.png'
-
+import adaImg from '../../images/ada.png'
 
 const members = [
   { name: 'Fer',    voice: 'Soprano', initial: 'F', photo: ferImg },
@@ -21,7 +21,7 @@ const members = [
   { name: 'Mada',   voice: 'Mezzo',   initial: 'M', photo: madaImg },
   { name: 'Dany',   voice: 'Mezzo',   initial: 'D', photo: daniImg },
   { name: 'Andy',   voice: 'Mezzo',   initial: 'A', photo: andyImg },
-  { name: 'Ada',    voice: 'Alto',    initial: 'A', photo: null },
+  { name: 'Ada',    voice: 'Alto',    initial: 'A', photo: adaImg },
   { name: 'Luz',    voice: 'Alto',    initial: 'L', photo: luzImg },
   { name: 'Vicky',  voice: 'Alto',    initial: 'V', photo: vickyImg },
 ]
